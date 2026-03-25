@@ -19,7 +19,8 @@
         "database_os": "None",
         "display_name": "solon",
         "notes": "",
-        "versus": ""
+        "versus": "None",
+        "tags": []
       }
     }
   ]
