@@ -20,12 +20,17 @@ const cache = new LRUCache({
   max: maxRows
 });
 
-const extra = { id: 0, message: "Additional fortune added at request time." };
+const extra = () => ({
+  id: 0,
+  message: "Additional fortune added at request time."
+});
 
 const app = express();
 
 app.set('x-powered-by', false);
 app.set('etag', false);
+app.set('case sensitive routing', true);
+app.set('strict routing', true);
 
 app.get("/plaintext", (req, res) => {
   res.writeHead(200, {
@@ -65,7 +70,7 @@ if (db) {
 
   app.get("/fortunes", async (req, res) => {
     const rows = await db.fortunes();
-    rows.push(extra);
+    rows.push(extra());
     rows.sort((a, b) => (a.message < b.message) ? -1 : 1);
     const n = rows.length;
     let html = "",
